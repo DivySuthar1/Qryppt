@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Registration Successful{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="terminal-card p-4 mb-4">
+            <h2 class="mb-4 typing-effect">Registration Successful</h2>
+            
+            <div class="text-center mb-4">
+                <i class="fas fa-check-circle fa-4x text-success"></i>
+                <p class="mt-3 mb-4">Your account has been created successfully!</p>
+            </div>
+            
+            <h4>Your Account QR Code</h4>
+            <p>This QR code is linked to your account:</p>
+            <div class="text-center mb-4">
+                <img src="data:image/png;base64,{{ qr_code }}" alt="User QR Code" class="img-fluid" style="max-width: 200px;">
+            </div>
+            
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('create_message') }}" class="btn btn-hacker">Create Your First Message</a>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Go to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

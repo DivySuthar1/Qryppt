@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Create Secret Message{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="terminal-card p-4 mb-4">
+            <h2 class="mb-4 typing-effect">Create Secret Message</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="message" class="form-label">Your Secret Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="encryption_key" class="form-label">Encryption Key</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="encryption_key" name="encryption_key" required>
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small class="text-muted">Share this key with the recipient to decrypt the message</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Message Expiry</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="expiry_option" id="no_expiry" value="no_expiry" checked>
+                        <label class="form-check-label" for="no_expiry">
+                            No expiry
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="expiry_option" id="1_hour" value="1_hour">
+                        <label class="form-check-label" for="1_hour">
+                            1 hour
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="expiry_option" id="1_day" value="1_day">
+                        <label class="form-check-label" for="1_day">
+                            1 day
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="expiry_option" id="1_week" value="1_week">
+                        <label class="form-check-label" for="1_week">
+                            1 week
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="expiry_option" id="custom" value="custom">
+                        <label class="form-check-label" for="custom">
+                            Custom date/time
+                        </label>
+                    </div>
+                    
+                    <div id="custom_expiry_fields" class="mt-3" style="display: none;">
+                        <div class="mb-2">
+                            <label for="custom_expiry_date" class="form-label">Expiry Date</label>
+                            <input type="date" class="form-control" id="custom_expiry_date" name="custom_expiry_date">
+                        </div>
+                        <div class="mb-2">
+                            <label for="custom_expiry_time" class="form-label">Expiry Time</label>
+                            <input type="time" class="form-control" id="custom_expiry_time" name="custom_expiry_time">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-hacker">Generate QR Code</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('encryption_key');
+        const icon = this.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+    
+    // Show/hide custom expiry fields
+    document.querySelectorAll('input[name="expiry_option"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            const customFields = document.getElementById('custom_expiry_fields');
+            if (this.value === 'custom') {
+                customFields.style.display = 'block';
+            } else {
+                customFields.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

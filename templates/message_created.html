@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Message Created{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="terminal-card p-4 mb-4">
+            <h2 class="mb-4 typing-effect">Secret Message Created</h2>
+            
+            <div class="text-center mb-4">
+                <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+            </div>
+
+            {% if expiry_time %}
+            <div class="alert flash-message mb-3">
+                <i class="fas fa-clock me-2"></i> This message will expire on: {{ expiry_time.strftime('%Y-%m-%d %H:%M UTC') }}
+            </div>
+            {% endif %}
+            
+            <div class="mb-4">
+                <label for="encrypted_text" class="form-label">Encrypted Message (Share with recipient):</label>
+                <div class="input-group">
+                    <textarea class="form-control" id="encrypted_text" rows="3" readonly>{{ encrypted_message }}</textarea>
+                    <button class="btn btn-outline-secondary" type="button" id="copyButton">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="alert flash-message">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Remember to share the encryption key with the recipient separately for security.
+            </div>
+            
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('create_message') }}" class="btn btn-hacker">Create Another Message</a>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Copy encrypted text to clipboard
+    document.getElementById('copyButton').addEventListener('click', function() {
+        const encryptedText = document.getElementById('encrypted_text');
+        encryptedText.select();
+
+        //Refactor this execcommand is Deprecated
+        document.execCommand('copy');
+        
+        // Change button temporarily to show copied
+        const icon = this.querySelector('i');
+        icon.classList.remove('fa-copy');
+        icon.classList.add('fa-check');
+        setTimeout(() => {
+            icon.classList.remove('fa-check');
+            icon.classList.add('fa-copy');
+        }, 2000);
+    });
+</script>
+{% endblock %}

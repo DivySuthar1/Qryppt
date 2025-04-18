@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Qryppt - Secure Communications{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 text-center mb-5">
+        <h1 class="display-4 typing-effect mb-4">Secure Your Communications</h1>
+        <p class="lead">Create encrypted messages and share them securely via QR codes</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-4 mb-4">
+        <div class="terminal-card p-4 h-100">
+            <div class="text-center mb-3">
+                <i class="fas fa-lock fa-3x"></i>
+            </div>
+            <h3 class="text-center mb-3">Encrypt Messages</h3>
+            <p>Create encrypted messages protected with AES encryption that can only be read by those with the key.</p>
+            {% if session.get('user_id') %}
+            <div class="d-grid mt-auto">
+                <a href="{{ url_for('create_message') }}" class="btn btn-hacker">Create Message</a>
+            </div>
+            {% else %}
+            <div class="d-grid mt-auto">
+                <a href="{{ url_for('login') }}" class="btn btn-hacker">Login to Create</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="terminal-card p-4 h-100">
+            <div class="text-center mb-3">
+                <i class="fas fa-qrcode fa-3x"></i>
+            </div>
+            <h3 class="text-center mb-3">QR Code Sharing</h3>
+            <p>Share your encrypted messages as QR codes that can be scanned by anyone but only decrypted with the key.</p>
+            <div class="d-grid mt-auto">
+                <a href="{{ url_for('decrypt_message_route') }}" class="btn btn-hacker">Decrypt Message</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="terminal-card p-4 h-100">
+            <div class="text-center mb-3">
+                <i class="fas fa-clock fa-3x"></i>
+            </div>
+            <h3 class="text-center mb-3">Timed Messages</h3>
+            <p>Set expiry times for your messages so they become unreadable after a specific date and time.</p>
+            {% if session.get('user_id') %}
+            <div class="d-grid mt-auto">
+                <a href="{{ url_for('create_message') }}" class="btn btn-hacker">Create Timed Message</a>
+            </div>
+            {% else %}
+            <div class="d-grid mt-auto">
+                <a href="{{ url_for('register') }}" class="btn btn-hacker">Register Now</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

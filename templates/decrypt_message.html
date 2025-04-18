@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Decrypt Message{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="terminal-card p-4 mb-4">
+            <h2 class="mb-4 typing-effect">Decrypt Secret Message</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="encrypted_data" class="form-label">Encrypted Message</label>
+                    <textarea class="form-control" id="encrypted_data" name="encrypted_data" rows="3" placeholder="Paste the encrypted message here...">{{ request.form.get('encrypted_data', '') }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="encryption_key" class="form-label">Decryption Key</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="encryption_key" name="encryption_key" required>
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small class="text-muted">Enter the key provided by the sender</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Or Scan QR Code</label>
+                    <div id="scanner-container" class="mb-3">
+                        <div id="reader" style="width: 100%"></div>
+                    </div>
+                    <button type="button" id="startScan" class="btn btn-hacker mb-2">
+                        <i class="fas fa-camera me-2"></i>Scan QR Code
+                    </button>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-hacker">Decrypt Message</button>
+                </div>
+            </form>
+
+            {% if decrypted_message %}
+            <div class="mt-4 p-3 terminal-card">
+                <h4 class="mb-3">Decrypted Message:</h4>
+                {% if is_expired %}
+                <div class="alert flash-message">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ decrypted_message }}
+                </div>
+                {% else %}
+                <div class="p-3" style="background-color: rgba(0,255,0,0.1); border: 1px solid #00ff00;">
+                    <p style="white-space: pre-wrap;">{{ decrypted_message }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('encryption_key');
+        const icon = this.querySelector('i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // QR Code Scanner
+    let html5QrcodeScanner = null;
+
+    document.getElementById('startScan').addEventListener('click', function() {
+        if (html5QrcodeScanner) {
+            html5QrcodeScanner.clear();
+        }
+
+        html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            { fps: 10, qrbox: 250 }
+        );
+
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById('encrypted_data').value = decodedText;
+            html5QrcodeScanner.clear();
+
+            // Focus on the decryption key field
+            document.getElementById('encryption_key').focus();
+        }
+
+        html5QrcodeScanner.render(onScanSuccess);
+    });
+</script>
+{% endblock %}

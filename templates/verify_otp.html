@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Verify OTP{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="terminal-card p-4 mb-4">
+            <h2 class="mb-4 typing-effect">Verify Your Account</h2>
+            
+            <p>We've sent a verification code to your email. Please enter it below to complete your registration.</p>
+            
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="otp_code" class="form-label">Verification Code</label>
+                    <input type="text" class="form-control" id="otp_code" name="otp_code" required autocomplete="off">
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-hacker">Verify Account</button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <p>Didn't receive the code?</p>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-secondary btn-sm">Register Again</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
