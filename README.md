@@ -28,12 +28,11 @@ Built with a minimalist "hacker aesthetic" because, let's be honest, security to
 
 _Here’s a peek at the UI and vibe of Qryppt:_
 
-![image](https://github.com/user-attachments/assets/f10b39dc-4da7-459a-ae99-5211f2cd4f55)
-![image](https://github.com/user-attachments/assets/538702c9-2769-4c8d-826f-75230296a73c)
-![image](https://github.com/user-attachments/assets/7110421e-db44-4a68-b86c-43848d54f047)
-![image](https://github.com/user-attachments/assets/6192df21-b498-4ddf-b824-6bc5f73f9c68)
-![image](https://github.com/user-attachments/assets/99b791da-376b-4bec-bf03-2c2c1b384fb1)
-![image](https://github.com/user-attachments/assets/5e32e10d-45de-4d70-8f4a-9615ded0a1df)
+![image](https://github.com/user-attachments/assets/1387fa3e-9c38-4c48-8d5f-8a3fc37d4018)
+![image](https://github.com/user-attachments/assets/dfdea5cc-efc7-43fb-8229-30862cd8fecc)
+![image](https://github.com/user-attachments/assets/c3c21ccd-b496-43f1-ba21-99dc4b09f158)
+![image](https://github.com/user-attachments/assets/b6932886-d4ee-4430-ae42-879401e11c56)
+![image](https://github.com/user-attachments/assets/5fe58689-f7f0-447c-b083-cdc440499674)
 
 ## Installation
 
